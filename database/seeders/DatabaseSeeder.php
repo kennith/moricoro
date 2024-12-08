@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ticket;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +17,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $group = Str::uuid();
+
+        for ($i = 0; $i < 4; $i++) {
+            Ticket::factory()->create([
+                'group' => $group,
+                'number' => Str::uuid(),
+                'user_id' => $user->id,
+            ]);
+        }
     }
 }
