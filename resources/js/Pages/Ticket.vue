@@ -37,7 +37,7 @@ const currentTicket = computed(() => {
 </script>
 
 <template>
-    <div>Hello World 2</div>
+    <div>Tickets</div>
     <div>There are {{ tickets.length }} tickets in this batch</div>
     <PrimaryButton v-on:click="changeTicketIndex">Next</PrimaryButton>
 
