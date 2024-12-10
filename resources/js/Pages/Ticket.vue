@@ -34,6 +34,13 @@ const changeTicketIndex = function () {
 const currentTicket = computed(() => {
     return props.tickets[currentTicketIndex.value];
 });
+
+Echo.channel(`public-channel.${currentTicket.value.group}`).listen(
+    'TicketScannedEvent',
+    (e: any) => {
+        changeTicketIndex();
+    },
+);
 </script>
 
 <template>

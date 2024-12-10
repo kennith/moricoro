@@ -23,4 +23,5 @@ watch(
 <template>
     <div>{{ ticket.id }}</div>
     <div>{{ ticket.number }}</div>
+    <div>{{ ticket.group }}</div>
 </template>
