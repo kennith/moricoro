@@ -9,12 +9,10 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TicketDetail from '@/Components/TicketDetail.vue';
 import { computed, ref } from 'vue';
 
+import type { Ticket } from '@/Models/ticket';
+
 const props = defineProps<{
-    tickets: {
-        id: number;
-        group: string;
-        number: string;
-    }[];
+    tickets: Ticket[];
 }>();
 
 const hasTicket = computed(() => {
@@ -35,6 +33,13 @@ const currentTicket = computed(() => {
     return props.tickets[currentTicketIndex.value];
 });
 
+// Echo.channel(`public-channel.${currentTicket.value.group}`).listen(
+//     'TicketScannedEvent',
+//     (e: any) => {
+//         changeTicketIndex();
+//     },
+// );
+
 Echo.channel(`public-channel.${currentTicket.value.group}`).listen(
     'TicketScannedEvent',
     (e: any) => {
@@ -44,15 +49,23 @@ Echo.channel(`public-channel.${currentTicket.value.group}`).listen(
 </script>
 
 <template>
-    <div>Tickets</div>
-    <div>There are {{ tickets.length }} tickets in this batch</div>
-    <PrimaryButton v-on:click="changeTicketIndex">Next</PrimaryButton>
+    <div class="flex flex-col items-center justify-between gap-4">
+        <div class="my-5 text-2xl">Tickets</div>
 
-    <div v-if="hasTicket">
-        <TicketDetail :ticket="currentTicket"></TicketDetail>
-    </div>
+        <div class="my-5 text-neutral-500">
+            There are {{ tickets.length }} tickets in this batch
+        </div>
 
-    <div v-else>
-        <div>no ticket</div>
+        <PrimaryButton v-on:click="changeTicketIndex" class="my-8">
+            Next
+        </PrimaryButton>
+
+        <div v-if="hasTicket">
+            <TicketDetail :ticket="currentTicket"></TicketDetail>
+        </div>
+
+        <div v-else>
+            <div>no ticket</div>
+        </div>
     </div>
 </template>

@@ -26,8 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/ticket', function () {
-    $tickets = Ticket::all();
+Route::get('/ticket/{group}', function (string $group) {
+    $tickets = Ticket::where('group', $group)->get();
 
     return Inertia::render('Ticket', [
         'tickets' => $tickets

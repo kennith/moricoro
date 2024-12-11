@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { watch, watchEffect, ref } from 'vue';
 
-interface Ticket {
-    id: number;
-    group: string;
-    number: string;
-}
+import type { Ticket } from '@/Models/ticket';
 
 const props = defineProps<{ ticket: Ticket }>();
 
