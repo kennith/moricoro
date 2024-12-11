@@ -53,7 +53,7 @@ Echo.channel(`public-channel.${currentTicket.value.group}`).listen(
         <div class="my-5 text-2xl">Tickets</div>
 
         <div class="my-5 text-neutral-500">
-            There are {{ tickets.length }} tickets in this batch
+            Ticket {{ currentTicketIndex + 1 }} of {{ tickets.length }} tickets in this batch
         </div>
 
         <PrimaryButton v-on:click="changeTicketIndex" class="my-8">

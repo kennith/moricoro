@@ -1,8 +1,11 @@
 <?php
 
+use App\Actions\ScanTicketAction;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QRCodeController;
 use App\Models\Ticket;
 use App\Models\User;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,6 +35,13 @@ Route::get('/ticket/{group}', function (string $group) {
     return Inertia::render('Ticket', [
         'tickets' => $tickets
     ]);
+});
+
+Route::get('/qr/{groupUuid}/{numberUuid}', QRCodeController::class);
+Route::get('/activate/qr/{groupUuid}/{numberUuid}/', function (string $groupUuid, string $numberUuid) {
+    $ticket = Ticket::where('group', $groupUuid)->first();
+    $scanTicketAction = new ScanTicketAction();
+    $scanTicketAction->execute($ticket);
 });
 
 require __DIR__ . '/auth.php';

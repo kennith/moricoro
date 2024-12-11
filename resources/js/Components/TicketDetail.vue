@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import { watch, watchEffect, ref } from 'vue';
+import { watch, watchEffect, ref, computed } from 'vue';
 
 import type { Ticket } from '@/Models/ticket';
 
 const props = defineProps<{ ticket: Ticket }>();
+
+const qrCodeUrl = computed(() => {
+    return `/qr/${props.ticket.group}/${props.ticket.number}`;
+});
+
+const qrCodeResponseUrl = computed(() => {
+    return `/activate/qr/${props.ticket.group}/${props.ticket.number}`;
+});
 
 watch(
     () => props.ticket,
@@ -12,12 +20,16 @@ watch(
     },
 );
 // watchEffect(async () => {
-//     console.log(`${props.ticket.id}`);
+//     console.log(`${ props.ticket.id } `);
 // });
 </script>
 
 <template>
-    <div>{{ ticket.id }}</div>
-    <div>{{ ticket.number }}</div>
-    <div>{{ ticket.group }}</div>
+    <div class="flex flex-col items-center">
+        <div>{{ qrCodeResponseUrl }}</div>
+        <div>{{ ticket.number }}</div>
+        <div>
+            <img :src="qrCodeUrl" />
+        </div>
+    </div>
 </template>
