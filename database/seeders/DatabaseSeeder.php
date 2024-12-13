@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        $group = Str::uuid();
+        $group = 'd422ac76-5d86-4d32-943b-5a6769af8e98';
 
         for ($i = 0; $i < 4; $i++) {
             Ticket::factory()->create([
