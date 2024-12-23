@@ -11,6 +11,8 @@ import { computed, ref } from 'vue';
 
 import type { Ticket } from '@/Models/ticket';
 
+declare const Echo: any;
+
 const props = defineProps<{
     tickets: Ticket[];
 }>();
@@ -32,13 +34,6 @@ const changeTicketIndex = function () {
 const currentTicket = computed(() => {
     return props.tickets[currentTicketIndex.value];
 });
-
-// Echo.channel(`public-channel.${currentTicket.value.group}`).listen(
-//     'TicketScannedEvent',
-//     (e: any) => {
-//         changeTicketIndex();
-//     },
-// );
 
 Echo.channel(`public-channel.${currentTicket.value.group}`).listen(
     'TicketScannedEvent',
